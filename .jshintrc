@@ -1,0 +1,10 @@
+{ "globals":
+  { "define": false
+  , "require": false
+  }
+, "globalstrict": true
+, "strict": true
+, "laxbreak": true
+, "newcap": false
+, "-W004": false
+}

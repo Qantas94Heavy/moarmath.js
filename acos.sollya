@@ -1,0 +1,4 @@
+prec = 1024;
+f = acos(x);
+result = fpminimax(f, 5, [| double... |], [-1, -0.5], relative);
+write(result) > "result";

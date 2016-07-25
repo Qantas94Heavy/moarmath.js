@@ -17,18 +17,34 @@ define(function () {
   }
   
   var hasInitializedTable = false;
-  var lookupTable = [];
-  lookupTable.length = 2048;
+  var lookupTable = new Array(2048);
   
   // test for typed array support (using typed arrays is much faster than doing a binary search)
   // jshint -W054
   var global = new Function('return this')();
-  var supportsTypedArrays = false;
+  // jshint +W054
+  
   var Uint32Array = global.Uint32Array;
   var Float64Array = global.Float64Array;
-  try {
-    supportsTypedArrays = new Uint32Array(new Float64Array([3.141592653589793]).buffer)[1] === 1074340347;
-  } catch (e) {}
+  
+  // place in IIFE to prevent try-catch from not optimizing
+  var index = 1;
+  var supportsTypedArrays = (function () {
+    try {
+      var inputArr = new Float64Array(1);
+      inputFloatArr[0] = 3.141592653589793;
+      var outputArr = new Uint32Array(inputArr.buffer);
+      // little endian
+      if (arr[1] === 1074340347) return true;
+      // big endian
+      if (arr[0] === 1074340347) {
+        index = 0;
+        return true;
+      }
+    } catch (e) {}
+    
+    return false;
+  })();
   
   function getExponent(x) {
     if (!hasInitializedTable) initializeLookupTable();
